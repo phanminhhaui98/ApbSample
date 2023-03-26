@@ -2,14 +2,17 @@
 using JetBrains.Annotations;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace Acme.BookStore.Authors;
 
-public class Author : FullAuditedAggregateRoot<Guid>
+public class Author : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {
     public string Name { get; private set; }
     public DateTime BirthDate { get; set; }
     public string ShortBio { get; set; }
+
+    public Guid? TenantId { get; set; }
 
     private Author()
     {
@@ -18,7 +21,7 @@ public class Author : FullAuditedAggregateRoot<Guid>
 
     internal Author(
         Guid id,
-        [NotNull] string name,
+        [NotNull] string name, 
         DateTime birthDate,
         [CanBeNull] string shortBio = null)
         : base(id)

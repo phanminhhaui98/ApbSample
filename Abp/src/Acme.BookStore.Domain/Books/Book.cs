@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace Acme.BookStore.Books
 {
-    public class Book : AuditedAggregateRoot<Guid>
+    public class Book : AuditedAggregateRoot<Guid>, IMultiTenant
     {
         public string Name { get; set; }
 
@@ -18,5 +19,7 @@ namespace Acme.BookStore.Books
         public float Price { get; set; }
 
         public Guid AuthorId { get; set; }
+
+        public Guid? TenantId { get; set; }
     }
 }
